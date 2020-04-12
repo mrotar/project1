@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+{% block title %}Officials{% endblock %}
+
+{% block content %}
+
+<h1>Officials</h1>
+<h2>National</h2>
+{% for office in actual_offices %}
+    <!--<div class="official">-->
+    <div class="container-md">
+    {% if office.levels|first == "country" %}
+        {{ office.name }}<br>
+        {{ officials[loop.index0].name }} -
+        {{ officials[loop.index0].party }}<br>
+        <a href="{{ officials[loop.index0].urls|first }}">{{ officials[loop.index0].urls|first }}</a> |
+        <!--{{ officials[loop.index0].channels }}-->
+        {% for x in officials[loop.index0].channels %}
+            {% if x.type == "Twitter" %}
+             <a href="http://www.twitter.com/{{ x.id }}">www.twitter.com/{{ x.id }}</a>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <!--</div>-->
+    </div>
+
+{% endfor %}
+<h2>State</h2>
+{% for office in actual_offices %}
+    <div>
+    {% if office.levels|first == "administrativeArea1" %}
+        {{ office.name }}:
+        {{ officials[loop.index0].name }},
+        {{ officials[loop.index0].party }},
+        <a href="{{ officials[loop.index0].urls|first }}">{{ officials[loop.index0].urls|first }}</a>
+        <!--{{ officials[loop.index0].channels }} -->
+        {% for x in officials[loop.index0].channels %}
+            {% if x.type == "Twitter" %}
+             <a href="http://www.twitter.com/{{ x.id }}">www.twitter.com/{{ x.id }}</a>
+            {% endif %}
+        {% endfor %}
+
+        <br>
+    {% endif %}
+    </div>
+{% endfor %}
+
+<h2>Local</h2>
+{% for office in actual_offices %}
+    {% if office.levels|first == "locality" or office.levels|first == "administrativeArea2" %}
+        {{ office.name }}:
+        {{ officials[loop.index0].name }},
+        {{ officials[loop.index0].party }},
+        <a href="{{ officials[loop.index0].urls|first }}">{{ officials[loop.index0].urls|first }}</a>
+        <!--{{ officials[loop.index0].channels }} -->
+        {% for x in officials[loop.index0].channels %}
+            {% if x.type == "Twitter" %}
+             <a href="http://www.twitter.com/{{ x.id }}">www.twitter.com/{{ x.id }}</a>
+            {% endif %}
+        {% endfor %}
+
+        <br>
+    {% endif %}
+{% endfor %}
+
+{% endblock %}
